@@ -3,29 +3,30 @@
 <head>
     <title>Sign up-Food App</title>
     <style>
+        html{
+            height: 100%;
+        }
         body{
-            margin: 0;
-            padding: 0;
             background: url(https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?cs=srgb&dl=burrito-chicken-close-up-461198.jpg&fm=jpg);
             background-color: #cccccc;
-            height: 900px;
+            height:100%;
             background-position: center;
             background-repeat: no-repeat;
-            background-origin: left top;
             background-size: cover;
         }
         .loginbox
         {
             width: 320px;
-            height: 550px;
+            height: 650px;
             background: #000;
             color: #fff;
             top: 20%;
-            left: 38%;
+            left: 60%;
             position: absolute;
             transform: translate(-50% -50%);
             box-sizing: border-box;
             padding: 70px 30px;
+            border-radius: 50px;
                 
         }
         .avatar
@@ -99,21 +100,21 @@
     </head>
     <body>
     <div class="loginbox">
-        <img src="kunfu.jpg" class="avatar">
+        <img src="https://i.pinimg.com/originals/eb/80/87/eb80873b89dcc92228712b6257ac05d0.jpg" class="avatar">
         <h1>Sign Up Here</h1>
-        <form method="post" action="Signup.php">
-            <?php include('errors.php'); ?>
+        <form method="post" action="Signup.html">
         <p>Username</p>
             <input type="text" name="username" placeholder="Enter Username" value="">
             <p>Email</p>
             <input type="text" name="email" placeholder="&#9993 Enter Email" value="">
+            <p>Mobile Number</p>
+            <input type="text" name="mobno" placeholder="&#9742 Enter Mobile Number" value="">
             <p>Password</p>
             <input type="password" name="password_1" placeholder="&#128274 Enter Password">
             <p>Confirm Password</p>
             <input type="password" name="password_2" placeholder="Confirm Password">
             <input type="submit" name="register" value="Signup"><br>
             <a href="">Already a member?</a><br>
-            <a href="#">Don't have an account?</a>
         </form>
         
         </div>
