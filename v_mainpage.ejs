@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Food App</title>
+    <script>
+        console.log("<%=menur[0].item_id%>");
+                    console.log("hello");
+    </script>
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <style>
-        html {
+         html {
   box-sizing: border-box;
 }
    .img1{ 
@@ -93,10 +96,7 @@
             padding:10px;
             
         }
-        @font-face {
-  font-family: "Fjalla One";
-  src: url("https://fonts.google.com/specimen/Fjalla+One");
-}
+       
 
 
         
@@ -105,28 +105,46 @@
     width: 100%;
   }
 }
+        .Grid{
+            display: grid;
+        }
         .column{
-            /*border:3px solid black;*/
+            border:3px solid black;
             display:table;
             float: left;
-  width: 33.33%;
-  padding: 10px;
+            width: 32%;
+            padding: 5px;
             border-radius:30px;
             border-collapse: seperate;
+            margin:5px;
         }
-            .Grid::after {
-  content: "";
-  clear: both;
-  display: table;
-                padding:20px;
+        .Grid{
+            display: grid;
+            grid-template-columns: auto auto auto;
+            padding: 10px;
 }
+        
+        .column img{
+            height:300px;
+            width:400px;
+            border-radius:60px;
+        }
+        
         .column button{
-            border-radius:20px;
-            background:transparent;
-            color:green;
-            padding:6px;
-            border:2px solid green;
+            border-color: #2196F3;
+            color: black;
+             border: 2px solid;
+            border-radius: 5px;
+            background-color: white;
+            padding: 14px 28px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left:30%;
             
+        }
+        .column button:hover{
+            background: red;
+            color: white;
         }
         .column input{
             border-radius:6px;
@@ -144,7 +162,7 @@
             <li><a href="#" class="butt">Contact</a></li>
   <li><a href="#" class="butt">Special Offer</a></li>
   <li><a href="#" class="butt">Orders</a></li>
-            <li><a href="#">Cart</a></li>
+            <li><a href="/cart/<%=u%>">Cart</a></li>
             <li><a class="active" href="#" class="butt">Home</a></li>
         </ul>
 </nav>
@@ -161,18 +179,23 @@
     else{%>
         <div class="Grid">
             <%for(var i=0;i<5;i++){%>
+            <form method="post" action="/cart/<%=u%>/<%=menur[i].item_id%>">
             <div class="column">
          <img src="<%=menur[i].item_url%>">
             <p>Item name:<%=menur[i].item_name%></p><hr>
             <p>Item Description:<%=menur[i].item_desc%></p><hr>
             <label for="qty">Quantity &nbsp; &nbsp;</label>
-            <input type="number" name="qty" placeholder="0"><hr>
+            <input name="qty" type="number" placeholder="0" min="1" max="10"><hr>
             <button type="submit">Add to Cart</button>
-                <hr>
             </div>
+               </form>
             <%}%>
         </div>
     <%}%>
+        
+        <form class="byebye" method="get" action="/">
+       <button class="logoutbtn" type="submit">LogOut</button>
+    </form>
 	       </main>
 </body>
 </html>

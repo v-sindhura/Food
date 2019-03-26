@@ -3,8 +3,9 @@ var bodyParser = require("body-parser");
 var foodapp = express();
 var is11=false;
 var before11=false;
+var path = require("path");
 //Here we are configuring express to use body-parser as middle-ware.
-foodapp.use(bodyParser.urlencoded({ extended: false }));
+foodapp.use(bodyParser.urlencoded({ extended: true }));
 foodapp.use(bodyParser.json());
 foodapp.use(express.static(__dirname+''))
 foodapp.set('view engine','ejs');
@@ -99,14 +100,32 @@ var checkschema = new mongoose.Schema({
 })
 const check= mongoose.model("check",checkschema);
 
+var cartschema = new mongoose.Schema({
+    username:String,
+    item_id:Number,
+    quantity:Number
+})
+const cart= mongoose.model("cart",cartschema);
+
 
 //first page- p_homepage
 foodapp.get('/',function(req,res){
 	res.render("p_home.ejs");
 });
 
-
-
+/*var myobj = [
+    { item_id:1,item_name: 'Burger', item_cost: 400,item_desc:'Yummy Burgers',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShgw4oL21_1VEKvC9EpkLOoTAfCC75iKLvT1zyU7ch8lgpMGf8'},
+    {item_id:2,item_name: 'North Indian Thali', item_cost: 200,item_desc:'Yummy food',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8zA8sv1JraxJr8UCyBm8miu9E2vkpTAL5eVHjEtSwxsY23_IX'},
+    { item_name: 'South Indian Thali', item_cost: 200,item_desc:'Yummy Thali',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuoBW5wsCRhK4dUQmoM2aa9r82IpSGPJ-4buAAbEckFlj0dO7K',item_id:3},
+    { item_name: 'Pizza', item_cost: 300,item_desc:'Yummy Pizzass',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSnqLShVHdHIWTPCMI80qfp8_Pl1Np-uHUnkWASq09QiM3lphn',item_id:4},
+    { item_name: 'Rolls', item_cost: 100,item_desc:'Yummy!!',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf9C6yeg31pkT8StwFH4INMXp6tG4RlJIngq9dCiUHSAxFk055',item_id:5},
+  ];
+   
+  menu.insertMany(myobj, function(err, res) {
+    if (err) throw err;
+    //console.log("Number of documents inserted: " + res.insertedCount);
+  });
+*/
 //signup page for customer
 foodapp.post('/signup',function(req,res){
     //validation code
@@ -129,24 +148,44 @@ foodapp.get('/customer/:username',function(req, res) {
       before11=true;
     else
       before11=false;
-    var myobj = [
-    { item_name: 'Burger', item_cost: 400,item_desc:'Yummy Burgers',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShgw4oL21_1VEKvC9EpkLOoTAfCC75iKLvT1zyU7ch8lgpMGf8'},
-    { item_name: 'North Indian Thali', item_cost: 200,item_desc:'Yummy food',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8zA8sv1JraxJr8UCyBm8miu9E2vkpTAL5eVHjEtSwxsY23_IX'},
-    { item_name: 'South Indian Thali', item_cost: 200,item_desc:'Yummy Thali',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuoBW5wsCRhK4dUQmoM2aa9r82IpSGPJ-4buAAbEckFlj0dO7K'},
-    { item_name: 'Pizza', item_cost: 300,item_desc:'Yummy Pizzass',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSnqLShVHdHIWTPCMI80qfp8_Pl1Np-uHUnkWASq09QiM3lphn'},
-    { item_name: 'Rolls', item_cost: 100,item_desc:'Yummy!!',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf9C6yeg31pkT8StwFH4INMXp6tG4RlJIngq9dCiUHSAxFk055'},
-  ];
-  menu.insertMany(myobj, function(err, res) {
-    if (err) throw err;
-    //console.log("Number of documents inserted: " + res.insertedCount);
-  });
+    
     menu.find({},function(err, menur) {
-            res.render("v_mainpage",{u:username,menur:menur,before11:before11});  
         console.log(menur);
-            })
+         
+            res.render("v_mainpage",{u:username,menur:menur,before11:before11});  
+           }).distinct('item_name');
     
     
 })
+
+foodapp.post('/cart/:u/:itemid',function(req, res) {
+    var u=req.params.u;
+    var qty=req.body.qty;
+    var itemid=req.params.itemid;
+    if(qty>=1){
+        var c=new cart({
+            username: u, 
+            item_id:itemid,
+            quantity:qty
+        });
+    c.save(function(err,result){
+        res.redirect('/cart/'+u); 
+    });
+    }
+    else{
+        res.redirect('/customer/'+u);
+    }
+})
+
+foodapp.get('/cart/:u',function(req,res){
+    var u=req.params.u;
+    cart.find({username:u},function(err, cartr) {
+            res.render("v_cart",{u:u, cartr:cartr});  
+            }).distinct('item_id');
+    
+})
+
+
 foodapp.get('/deliveredorders/:dname',function(req,res){
     var dname=req.params.dname;
     res.render("s_orders",{dname:dname});
