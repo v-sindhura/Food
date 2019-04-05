@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <title>User Cart</title>
     <style>
         *{
@@ -133,8 +135,14 @@
         <div class="Grid">
             <%for(var i=0;i<cartr.length;i++){%>
             <div class="column">
-            <p>Item name:<%=cartr[i].item_id%></p>
+            <p>Item id:<%=cartr[i].item_id%></p>
+            <%var j=cartr[i].item_id;%>
+            <p>Item name:<%=menur[j].item_name%></p>
                 <p>Quantity:<%=cartr[i].quantity%></p>
+                <p>Item name:<%=menur[j].item_name%></p>
+                <form method="post" action=/cartremove/<%=u%>/<%=cartr[i].item_id%>>
+                <button type="submit">Remove from Cart</button>
+                <form>
             </div>
             <%}%>
         </div>

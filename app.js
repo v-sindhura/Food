@@ -112,20 +112,21 @@ const cart= mongoose.model("cart",cartschema);
 foodapp.get('/',function(req,res){
 	res.render("p_home.ejs");
 });
-
-/*var myobj = [
-    { item_id:1,item_name: 'Burger', item_cost: 400,item_desc:'Yummy Burgers',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShgw4oL21_1VEKvC9EpkLOoTAfCC75iKLvT1zyU7ch8lgpMGf8'},
-    {item_id:2,item_name: 'North Indian Thali', item_cost: 200,item_desc:'Yummy food',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8zA8sv1JraxJr8UCyBm8miu9E2vkpTAL5eVHjEtSwxsY23_IX'},
-    { item_name: 'South Indian Thali', item_cost: 200,item_desc:'Yummy Thali',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuoBW5wsCRhK4dUQmoM2aa9r82IpSGPJ-4buAAbEckFlj0dO7K',item_id:3},
-    { item_name: 'Pizza', item_cost: 300,item_desc:'Yummy Pizzass',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSnqLShVHdHIWTPCMI80qfp8_Pl1Np-uHUnkWASq09QiM3lphn',item_id:4},
-    { item_name: 'Rolls', item_cost: 100,item_desc:'Yummy!!',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf9C6yeg31pkT8StwFH4INMXp6tG4RlJIngq9dCiUHSAxFk055',item_id:5},
+/*
+var myobj = [
+    { item_id:0,item_name: 'Burger', item_cost: 400,item_desc:'Yummy Burgers',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShgw4oL21_1VEKvC9EpkLOoTAfCC75iKLvT1zyU7ch8lgpMGf8'},
+    {item_id:1,item_name: 'North Indian Thali', item_cost: 200,item_desc:'Yummy food',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8zA8sv1JraxJr8UCyBm8miu9E2vkpTAL5eVHjEtSwxsY23_IX'},
+    { item_name: 'South Indian Thali', item_cost: 200,item_desc:'Yummy Thali',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuoBW5wsCRhK4dUQmoM2aa9r82IpSGPJ-4buAAbEckFlj0dO7K',item_id:2},
+    { item_name: 'Pizza', item_cost: 300,item_desc:'Yummy Pizzass',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSnqLShVHdHIWTPCMI80qfp8_Pl1Np-uHUnkWASq09QiM3lphn',item_id:3},
+    { item_name: 'Rolls', item_cost: 100,item_desc:'Yummy!!',item_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf9C6yeg31pkT8StwFH4INMXp6tG4RlJIngq9dCiUHSAxFk055',item_id:4},
   ];
    
   menu.insertMany(myobj, function(err, res) {
     if (err) throw err;
     //console.log("Number of documents inserted: " + res.insertedCount);
   });
-*/
+  */
+
 //signup page for customer
 foodapp.post('/signup',function(req,res){
     //validation code
@@ -148,14 +149,14 @@ foodapp.get('/customer/:username',function(req, res) {
       before11=true;
     else
       before11=false;
-    
+    cart.find({},function(err,cartr){
     menu.find({},function(err, menur) {
         console.log(menur);
          
-            res.render("v_mainpage",{u:username,menur:menur,before11:before11});  
+            res.render("v_mainpage",{u:username,menur:menur,before11:before11,cartr:cartr});  
            }).distinct('item_name');
     
-    
+    })
 })
 
 foodapp.post('/cart/:u/:itemid',function(req, res) {
@@ -169,7 +170,7 @@ foodapp.post('/cart/:u/:itemid',function(req, res) {
             quantity:qty
         });
     c.save(function(err,result){
-        res.redirect('/cart/'+u); 
+        res.redirect('/customer/'+u); 
     });
     }
     else{
@@ -177,12 +178,24 @@ foodapp.post('/cart/:u/:itemid',function(req, res) {
     }
 })
 
+foodapp.post('/cartremove/:u/:cartid',function(req, res) {
+    var u=req.params.u;
+    var cartid=req.params.cartid;
+    cart.remove({username:u,item_id:cartid},function(err,cartr){
+    	res.redirect('/cart/'+u);
+    });
+})
+
+
 foodapp.get('/cart/:u',function(req,res){
     var u=req.params.u;
+    
     cart.find({username:u},function(err, cartr) {
-            res.render("v_cart",{u:u, cartr:cartr});  
+        menu.find({},function(err,menur){
+            res.render("v_cart",{u:u, cartr:cartr, menur:menur});  
             }).distinct('item_id');
     
+})
 })
 
 

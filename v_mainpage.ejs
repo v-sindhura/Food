@@ -146,6 +146,12 @@
             background: red;
             color: white;
         }
+       .column  button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
         .column input{
             border-radius:6px;
             padding:10px;
@@ -178,24 +184,37 @@
     <%}
     else{%>
         <div class="Grid">
-            <%for(var i=0;i<5;i++){%>
+            <%for(var i=0;i<menur.length;i++){%>
             <form method="post" action="/cart/<%=u%>/<%=menur[i].item_id%>">
             <div class="column">
          <img src="<%=menur[i].item_url%>">
             <p>Item name:<%=menur[i].item_name%></p><hr>
             <p>Item Description:<%=menur[i].item_desc%></p><hr>
-            <label for="qty">Quantity &nbsp; &nbsp;</label>
+            <%var flag=0;
+            for(var j=0;j<cartr.length;j++){
+            if(cartr[j].item_id==menur[i].item_id && cartr[j].username==u)
+            {
+            flag=1;
+            console.log(menur[i].item_name);
+            break;}
+        }
+            if(flag==0){
+        %>
+        <label for="qty">Quantity &nbsp; &nbsp;</label>
             <input name="qty" type="number" placeholder="0" min="1" max="10"><hr>
             <button type="submit">Add to Cart</button>
+
+            <% }%>
+            <%if(flag==1){%>
+            <p>Go to cart to edit quantity!</p><hr>
+            <button type="button" disabled>Added to cart</button>
+            <%}%>
             </div>
                </form>
             <%}%>
         </div>
     <%}%>
         
-        <form class="byebye" method="get" action="/">
-       <button class="logoutbtn" type="submit">LogOut</button>
-    </form>
 	       </main>
 </body>
 </html>
