@@ -51,7 +51,7 @@ foodapp.get('/chef/myorders/:username',function(req, res) {
 })
 
 //when chef chooses the item to cook
-foodapp.post('/cheforder/:username/:itemid',function(req, res) {
+foodapp.post('/chef/order/:username/:itemid',function(req, res) {
     var username = req.params.username,
         itemid = req.params.itemid;
     check.findOne({_id:itemid},function(err, checkres) {
@@ -73,7 +73,7 @@ foodapp.post('/cheforder/:username/:itemid',function(req, res) {
 /*  when chef cooked the item change the item status to 2
     if all the items in the order are cooked then change the order status to 1
 */
-foodapp.post('/chefconfirm/:username/:itemid',function(req, res) {
+foodapp.post('/chef/confirm/:username/:itemid',function(req, res) {
     var username = req.params.username,
         itemid = req.params.itemid;
     check.updateOne({_id:itemid},{$set:{status:2}},function(){   //update the item status to 2
@@ -89,14 +89,12 @@ foodapp.post('/chefconfirm/:username/:itemid',function(req, res) {
                             if(!err){   
                                 //check if all items are cooked
                                 if(res_order.length == res_cooked.length){
-                                    order.updateOne({o_id:temp},{status:"1"},function(){
-                                         //go back to my_orders page
-                                        res.redirect('/chef/myorders/' + username);
+                                    order.updateOne({o_id:temp},{status:"1"},function(){ 
+                                        res.redirect('/chef/myorders/' + username); //go back to my_orders page
                                     });    
                                 }
                                 else{
-                                    //go back to the my_orders page
-                                    res.redirect('/chef/myorders/' + username); 
+                                    res.redirect('/chef/myorders/' + username); //go back to the my_orders page
                                 }
                             }
                         });
@@ -108,7 +106,7 @@ foodapp.post('/chefconfirm/:username/:itemid',function(req, res) {
 });
 /*This function runs daily at 11:45am to check whether there are any items left out
   If there are items left out then it assigns those items to chefs randomly*/ 
-var job = schedule.scheduleJob('15 6 * * *', function(){
+var job = schedule.scheduleJob('42 10 * * *', function(){
   check.find({status:0},function(err,check_result){
         if(!err && check_result.length!=0){
             chef.find({},function(err,chefs){
@@ -125,4 +123,3 @@ var job = schedule.scheduleJob('15 6 * * *', function(){
         }
     })
 });
-//================================================================================================--finish
