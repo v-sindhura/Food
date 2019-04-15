@@ -36,6 +36,7 @@ app.get('/deliveredorders/:dname',function(req,res){
      dbo.collection("order").find({}).toArray(function(err, result) {
          //console.log(result);
 	if(err) throw err;
+	 //these if else verifies whether all the orders are ready to be delivered
          if(result.length==0){
              res.render("s_main",{dname:dname});
          }
@@ -48,6 +49,7 @@ app.get('/deliveredorders/:dname',function(req,res){
                 }
 
             }
+		// if all orders are ready this if block will het executed and i should change this part by integrating with algorithm
             if(c==result.length){  
                 var a1 = [];
                 var a2 = [];
@@ -78,7 +80,6 @@ app.get('/deliveredorders/:dname',function(req,res){
                             if(err)throw err;
                         })
                     }
-                }
                 if(dname=="mounika"){
                     //console.log(a);
                     res.render("s_list",{dname:dname,a:a1});
