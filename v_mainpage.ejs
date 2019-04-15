@@ -4,16 +4,15 @@
     <title>Food App</title>
     <script>
         console.log("<%=menur[0].item_id%>");
-                    console.log("hello");
     </script>
     <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <style>
          html {
-  box-sizing: border-box;
+            box-sizing: border-box;
 }
    .img1{ 
         position: absolute;
@@ -52,22 +51,22 @@
         }
         .navbar{
             background-color: #333;
-  overflow: hidden;
+            overflow: hidden;
             top: 400px;
             width: 100%;
         }
         .navbar a{
             float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 30px;
-  text-decoration: none;
-  font-size: 17px;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 30px;
+            text-decoration: none;
+            font-size: 17px;
             float: right;
         }
         .navbar a:hover {
-  background-color: #ddd;
-  color: black;
+            background-color: #ddd;
+            color: black;
 }
         .Hee{
             font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
@@ -101,8 +100,8 @@
 
         
    @media screen and (max-width: 500px) {
-  .column {
-    width: 100%;
+        .column {
+            width: 100%;
   }
 }
         .Grid{
@@ -140,18 +139,25 @@
             font-size: 16px;
             cursor: pointer;
             margin-left:30%;
+            box-shadow: 0 3px #111;
             
         }
         .column button:hover{
             background: red;
             color: white;
+           box-shadow: 0 1px #ec6068;
         }
+       column .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+            }
        .column  button:disabled,
-button[disabled]{
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
-}
+                button[disabled]{
+                border: 1px solid #999999;
+                background-color: #ff6961;
+                color: #666666;
+            }
         .column input{
             border-radius:6px;
             padding:10px;
@@ -166,9 +172,9 @@ button[disabled]{
     <nav class="navbar">
         <ul>
             <li><a href="#" class="butt">Contact</a></li>
-  <li><a href="#" class="butt">Special Offer</a></li>
-  <li><a href="#" class="butt">Orders</a></li>
-            <li><a href="/cart/<%=u%>">Cart</a></li>
+            <li><a href="#" class="butt">Special Offer</a></li>
+            <li><a href="#" class="butt">Orders</a></li>
+            <li><a href="/customer/cart/<%=u%>">Cart</a></li>
             <li><a class="active" href="#" class="butt">Home</a></li>
         </ul>
 </nav>
@@ -179,14 +185,15 @@ button[disabled]{
     <main>
     <%if(!before11){%>
         <div class="not-before11">
-    <p>Sorry for the inconvenience but you cannot order now!!!</p>
+        <p>Sorry for the inconvenience but you cannot order now!!!</p>
         </div>
     <%}
     else{%>
         <div class="Grid">
             <%for(var i=0;i<menur.length;i++){%>
-            <form method="post" action="/cart/<%=u%>/<%=menur[i].item_id%>">
+            <form method="post" action="/customer/cart/<%=u%>/<%=menur[i].item_id%>">
             <div class="column">
+               
          <img src="<%=menur[i].item_url%>">
             <p>Item name:<%=menur[i].item_name%></p><hr>
             <p>Item Description:<%=menur[i].item_desc%></p><hr>
@@ -206,11 +213,12 @@ button[disabled]{
 
             <% }%>
             <%if(flag==1){%>
-            <p>Go to cart to edit quantity!</p><hr>
+            <label for="qty">Quantity &nbsp; &nbsp;</label>
+            <input name="qty" type="number" placeholder="qty" min="1" max="10" disabled><hr>
             <button type="button" disabled>Added to cart</button>
             <%}%>
             </div>
-               </form>
+            </form>
             <%}%>
         </div>
     <%}%>

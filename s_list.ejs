@@ -1,4 +1,4 @@
-//This page is used to display the orders to be delivered by a delivery man
+<!--This page is used to display the orders to be delivered by a delivery man-->
 <html>
     <head>
         <style>
@@ -87,8 +87,13 @@
         <main id="x">
             
         </main>
-        <script type="text/javascript">         
-            document.getElementById("x").innerHTML='<%for(var i=0;i<a.length;i++){%><% if(a[i].status=='1'){%><li id=i>o_id:<%=a[i].o_id%> <p>username:<%=a[i].uname%></p><p>cost:<%=a[i].cost%></p><form method="get" action="/delconfirm/<%=dname%>/<%=a[i].o_id%>"><button>Delivered</button></form></li><%}%><%}%>';
+        <script type="text/javascript">
+            if(<%=a.length%>==0){
+                    document.getElementById("x").innerHTML='<h3>You dont have any delivered orders</h3>';
+                }
+            else{
+            document.getElementById("x").innerHTML='<%for(var i=0;i<a.length;i++){%><% if(a[i].status=='1'){%><li id=i>o_id:<%=a[i].o_id%> <p>username:<%=a[i].uname%></p><p>cost:<%=a[i].cost%></p><form method="get" action="/delconfirm/<%=dname%>/<%=a[i].o_id%>"><button>Delivered</button></form></li><%}}%>';
+            }
         </script>
         </ul>
     </body>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/delivery.css">
+    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet">
+    <title>Deliveryman</title>
+    <style>
+        body{
+  font-family: 'Merienda One', cursive;
+  font-size: 20px;
+  padding-top:150px;
+  background-image: url(https://trackimo.com/wp-content/uploads/2016/06/Pizza-Delivery.jpg);
+  background-size:cover;
+  height:700px;
+  background-repeat:no-repeat;
+
+}
+
+.success {background-color: #4CAF50;} /* Green */
+.success:hover {background-color: #46a049;}
+
+h2
+{
+  color:white;
+}
+
+form
+{
+  height:500px;
+  width:300px;
+  padding-left:20px;
+  padding-right:20px;
+  padding-top:50px;
+  background-color:#042348;
+  color:white;
+  border-radius:15px 60px;
+
+}
+
+
+    </style>
+</head>
+<body>
+  <div class="col-xs-8">
+  </div>
+      <div class="col-xs-4 " >
+          <form action="/delivery/deliverysubmit" method="post">
+           		<fieldset>
+           		  <legend><h2>Login Here</h2></legend>
+           		    Username:<br>
+           		  <input type="text" name="username" style="color:black"><br>
+           		    Password:<br>
+           		  <input type="Password" name="password" style="color:black"><br><br>
+           		  <button class="btn success">Login</button>
+           		</fieldset>
+          </form>
+      </div>
+</body>
+</html>
