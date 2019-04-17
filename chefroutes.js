@@ -1,5 +1,6 @@
-
 //===============================================================================================vijaya
+var time=require('./time_constants')
+
 /*to check whether time is greater than 11 or not*/
 function check_time_eligibilty(){
     //current time in utc Date Format
@@ -9,7 +10,7 @@ function check_time_eligibilty(){
     //to get minutes;                      
     var min = now.getMinutes();                  
     //to check whether time>5:30 am or not 11:00 am in itc is equal to 5:30 in utc
-    return(hour>5 || hour==5 && min>=30);         
+    return(hour>time[0] || hour==time[0] && min>=time[1]);         
 }
 
 /* shows chef's home page, where after 11'O clock all the orders for today are present whereas 
@@ -29,7 +30,11 @@ foodapp.get('/chef/:username',function(req, res) {
                 }
             })
         }
+        if(err){
+            res.send("An Expected error has ocuurred while reading the data")
+        }
     })
+    
 })
 
 //chef myorders page which contains the items that chef is cooking for today
@@ -44,6 +49,9 @@ foodapp.get('/chef/myorders/:username',function(req, res) {
                    //to check whether the time is > 11:00Am or not
                     var istime11=check_time_eligibilty();                        
                     res.render("chef_myorders",{username:username,menuresult:menuresult,myresult:myresult,istime11:istime11});  
+                }
+                if(err){
+                    res.send("An Expected error has ocuurred while reading the data")
                 }
             })
         }
@@ -67,8 +75,10 @@ foodapp.post('/chef/order/:username/:itemid',function(req, res) {
                 res.send("This order is already taken");
             }
         }
+        if(err){
+            res.send("An Expected error has ocuurred while reading the data")
+        }
     })
-    
 })
 /*  when chef cooked the item change the item status to 2
     if all the items in the order are cooked then change the order status to 1
@@ -101,12 +111,16 @@ foodapp.post('/chef/confirm/:username/:itemid',function(req, res) {
                     }
                 });
            }
+           
+        if(err){
+            res.send("An Expected error has ocuurred while reading or writing the data")
+        }
         }); 
     });
 });
 /*This function runs daily at 11:45am to check whether there are any items left out
   If there are items left out then it assigns those items to chefs randomly*/ 
-var job = schedule.scheduleJob('42 10 * * *', function(){
+var job = schedule.scheduleJob('15 time[0]+1 * * *', function(){
   check.find({status:0},function(err,check_result){
         if(!err && check_result.length!=0){
             chef.find({},function(err,chefs){
@@ -123,3 +137,4 @@ var job = schedule.scheduleJob('42 10 * * *', function(){
         }
     })
 });
+//================================================================================================--finish
