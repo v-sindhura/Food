@@ -9,3 +9,4 @@ var checkschema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model("check",checkschema);
+
