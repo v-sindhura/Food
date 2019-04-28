@@ -7,5 +7,4 @@ var chefschema = new mongoose.Schema({
     c_pwd:String
 });
 
-
 module.exports = mongoose.model("chef",chefschema);
