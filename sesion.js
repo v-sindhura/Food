@@ -10,3 +10,4 @@ var sesionschema= new mongoose.Schema({
 sesionschema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("sesion",sesionschema);
+
