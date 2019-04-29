@@ -1,0 +1,54 @@
+<!--this page will be displayed when the delivery man logs in and he has no orders to deliver-->
+<!DOCTYPE html>
+<html>
+    <head>
+<style>
+             body{
+                 margin:0;
+            }
+            .nav {                
+                list-style-type:none;
+                margin:0;
+                padding:0;
+                width:15%;
+                height:100%;
+                position:fixed;
+                overflow: auto;
+            background-color: #1995ad;
+                
+            }
+            .nav li a{
+                display:block;
+                color:white;
+                text-decoration: none;
+                padding:8px 16px;
+            }
+            .nav li:last-child {
+                border-bottom: none;
+            }
+
+            .nav li a:hover:not(.active) {
+                background-color: #bcbabe;
+            }
+            .nav  a:hover,a:active{
+                background-color:#bcbabe;
+            }
+            .nav li a.active {
+                background-color: #bcbabe;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <ul>
+            <li><a class=active href="/delivery/<%=dname%>">Orders to deliver</a></li>
+            <li><a href="/delivery/deliveredorders/<%=dname%>">Delivered orders</a></li>
+            <li><a  href="/logout">Log Out</a></li>
+        </ul> 
+        <div style="margin-left:15%;padding:1px 16px;height:1000px;">
+            <h1>Welcome <%=dname%> !!</h1>
+            <h3>No orders to be delivered yet</h3>
+            <img src="http://seabreezeclareisland.com/wp-content/uploads/2018/05/240_F_133148957_jM76yAt2lseVdyAAyqxFUXMTIZ66aHU9.jpg" width="500" height="333">
+        </div>
+    </body>
+</html>
