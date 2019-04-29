@@ -10,54 +10,36 @@ class Graph{
         this.AdjList.get(v).push([w,n]); 
         this.AdjList.get(w).push([v,n]);
     }
-    printGraph() 
-    { 
+    printGraph(){ 
         //console.log(this.AdjList);
-        
-        // get all the vertices 
         var get_keys = this.AdjList.keys(); 
-        //console.log(get_keys);
-        //console.log(Object.keys(this.AdjList).length)
-        //console.log(this.AdjList.length);
-        //var temp = this.AdjList.get('A'); 
-        //console.log(temp);
         // iterate over the vertices 
-        for (var i of get_keys)  
-        { 
-                // great the corresponding adjacency list 
-                // for the vertex 
+        for (var i of get_keys){ 
                 var get_values = this.AdjList.get(i); 
                
                 var conc = ""; 
-
-                // iterate over the adjacency list 
-                // concatenate the values into a string 
                 for (var j of get_values) 
                     conc += j + " "; 
-
                 // print the vertex and its adjacency list 
                 //console.log(i + " -> " + conc); 
             } 
-    } 
-
-    floydWarshallAlgorithm()
-    {
+    }
+    floydWarshallAlgorithm(){
        let dist = {};
-       for (var [key, value] of this.AdjList) {
+       for (var [key, value] of this.AdjList){
         dist[key]={};
            var a=key;
-        value.forEach(function(l){
-            
-            dist[key][l[0]]=l[1];
-            
-            
+        value.forEach(function(l){            
+            dist[key][l[0]]=l[1];    
         });
-           for(var [key, value] of this.AdjList){
-                if(dist[a][key]==undefined){
-                    dist[a][key]=Infinity;
-                }
-                if(a==key)dist[key][key]=0;
+       for(var [key, value] of this.AdjList){
+            if(dist[a][key]==undefined){
+                dist[a][key]=Infinity;
             }
+            if(a==key){
+                dist[key][key]=0;
+            }
+        }
        }
         for(var [key1,val1] of this.AdjList){
             for(var [key2,val2] of this.AdjList){
@@ -69,20 +51,17 @@ class Graph{
             }
         }
         //console.log(dist);
-        return dist;
-    
+        return dist;    
     }
-
 }
 
-var g = new Graph(4); 
+var g = new Graph(30); 
 var vertices = [ '0', '1','2', '3', '4' ,'5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30']; 
-var loc=['0','1','3','4','7','12','15','27','30','6','8'];
+var loc=['0','19','1','15','16','9','29','13'];
 // adding vertices 
-for (var i = 0; i < vertices.length; i++) { 
+    for (var i = 0; i < vertices.length; i++){ 
     g.addVertex(vertices[i]); 
 } 
- 
 // adding edges 
 g.addEdge('0', '1',10); 
 g.addEdge('0', '2',11);
@@ -161,7 +140,6 @@ g.addEdge('7', '18',3);
 g.addEdge('17', '22',3);
 g.addEdge('11', '25',3);
 
-
 g.printGraph(); 
 floyd=g.floydWarshallAlgorithm();
 kitchen=floyd['0'];
@@ -170,23 +148,21 @@ calpath(floyd,loc);
 function calpath(floyd,loc){
     var node='0';
     var index=0;
-    d1={}
-    d2={}
-    d3={}
+    deliveryman1={}
+    deliveryman2={}
+    deliveryman3={}
     //console.log("locations ",loc);
     //console.log(floyd[node]);
     var finalpath={};
     totaldist=0;
     while(loc.length!=1){
         childlist=[]
-        //console.log("there");
         loc.splice(index,1);
         min=Infinity;
         for(var key in floyd[node]){
             //console.log("key is",key)
             //console.log("locations ",loc);             
-            for ( var l in loc){               
-                //console.log("l is ",l)                
+            for ( var l in loc){                              
                 if(loc[l]==key){
                     if (floyd[node][key]<min){
                         //console.log(floyd[node][key])
@@ -195,66 +171,68 @@ function calpath(floyd,loc){
                         index=l;
                     }
                 }
-            }          
-            
+            }      
         }
         finalpath[node]=[mindex,floyd[node][mindex]];
         totaldist+=floyd[node][mindex];
         console.log(node,mindex,floyd[node][mindex]);
-        node=mindex;
-        //console.log(node);
-        
-        
+        node=mindex;    
     }
     //console.log(finalpath);
     console.log(finalpath['0'][0]);
     console.log(totaldist);
     avg=totaldist/3+10;
     key='0';
-    sum=0;
     sum1=0;
     sum2=0;
+    sum3=0;
+    d1flag=0;
+    d2flag=0;
     flag1=0;
     flag2=0;
     while(key in finalpath!=false ){
-        
-        //sum=sum+finalpath[key][1];
-        if(sum+finalpath[key][1]<=avg){
-            //console.log("sum=",sum);
-            sum=sum+finalpath[key][1];
-            d1[finalpath[key][0]]=finalpath[key][1];
+        if(sum1+finalpath[key][1]<=avg){
+            if(d1flag==0){
+                console.log("sum1=",key);
+                sum1=sum1+finalpath[key][1];
+                deliveryman1[key]=[finalpath[key][0],finalpath[key][1]];
+            }
         }
-        else if (sum1+finalpath[key][1]<=avg){
-            //console.log("sum 1",key);
-            if(flag1==0){
-               sum1=kitchen[key];
-                flag1=1;
-            }            
-            sum1=sum1+finalpath[key][1];
-            if(sum1<=avg){
-                //console.log("sum1=",sum1,key);
-                d2[finalpath[key][0]]=finalpath[key][1];
-            }            
+        else if (sum2+finalpath[key][1]<=avg){
+            console.log("sum 2",key);
+            if(d2flag==0){
+                if(flag1==0){
+                   sum2=kitchen[key];
+                    flag1=1;
+                    d1flag=1;
+                    deliveryman2['0']=[finalpath[key][0],finalpath[key][1]];
+                }            
+                
+                else if(sum2<=avg){
+                    console.log("sum 2",key);
+                    sum2=sum2+finalpath[key][1];
+                    deliveryman2[key]=[finalpath[key][0],finalpath[key][1]];
+                } 
+            }
         }
         else{
-            //console.log("sum2",key);
+            console.log("sum3",key);
             if(flag2==0){
-               sum2=kitchen[key];
+               sum3=kitchen[key];
                 flag2=1;
+                d2flag=1;
+                deliveryman3['0']=[key,kitchen[key]];
             }  
-            sum2=sum2+finalpath[key][1];
-            //console.log("sum2=",sum2);
-            d3[finalpath[key][0]]=finalpath[key][1];
+            sum3=sum3+finalpath[key][1];
+            deliveryman3[key]=[finalpath[key][0],finalpath[key][1]];
             
 
         }
-        key=finalpath[key][0];
-        //console.log(key);
-        
+        key=finalpath[key][0];        
     }
-    console.log("first delivery man ",d1,sum);
-    console.log("second delivery man ",d2,sum1);
-    console.log("third delivery man ",d3,sum2);
-    
+    console.log("first delivery man ",deliveryman1,sum1);
+    //console.log("length is ",Object.keys(deliveryman1).length);
+    console.log("second delivery man ",deliveryman2,sum2);
+    console.log("third delivery man ",deliveryman3,sum3); 
     
 }
