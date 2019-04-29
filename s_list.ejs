@@ -1,0 +1,130 @@
+<!--This page is used to display the orders to be delivered by a delivery man-->
+<html>
+    <head>
+        <style>
+             body{
+                 margin:0;
+            }
+            .nav {                
+                list-style-type:none;
+                margin:0;
+                padding:0;
+                width:15%;
+                height:100%;
+                position:fixed;
+                overflow: auto;
+            background-color: #1995ad;
+                
+            }
+            .nav li a{
+                display:block;
+                color:white;
+                text-decoration: none;
+                padding:8px 16px;
+            }
+            .nav li:last-child {
+                border-bottom: none;
+            }
+
+            .nav li a:hover:not(.active) {
+                background-color: #bcbabe;
+            }
+            .nav  a:hover,a:active{
+                background-color:#bcbabe;
+            }
+            .nav li a.active {
+                background-color: #bcbabe;
+            }
+            .og-grid {
+                padding-top:10%;
+                list-style: none;
+                padding: 20px 0;
+                margin: 0 auto;
+                width: 100%;
+                padding-left: 17%;
+    
+                }
+
+            .og-grid li {
+                display:block;
+                margin: 10px 5px 0 5px;
+                vertical-align: top;
+                width:75%;
+                height: 300px;
+                padding-left: 10px;
+                border: 1px solid #555;
+                background-color: white;
+                border-radius: 10px;
+                color:black;
+                    
+                }
+            .og-grid button{
+                position: absolute;
+                left:75%;
+                background-color: #1995ad;
+                border:none;
+                border-radius: 20px;
+                outline-color: white;
+                width:150px;
+                height:40px;
+                color:white;
+            }
+            .og-grid ul{
+                border:1px solid #555;
+                background-color: #f1f1f1;
+                list-style-type:none;
+    
+            }
+            
+        </style>
+    </head>
+    <body>
+        <ul id="nav" class="nav">
+            <li><a class="active" href="/delivery/<%=dname%>">Orders to deliver</a></li>
+            <li><a  href="/delivery/deliveredorders/<%=dname%>">Delivered orders</a></li>
+            <li><a  href="/logout">Log Out</a></li>
+        </ul> 
+        <h1 style="margin-left:17%;height:10px;">Hi <%=dname%>!!</h1>       
+        <ul id="og-grid" class="og-grid">
+        <main id="x">
+            
+        </main>
+        <script type="text/javascript">
+            if(<%=Object.keys(a).length%>==0){
+                    document.getElementById("x").innerHTML=`<h3>You dont have any orders to deliver</h3>
+                    <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRifWMCEOWaoH-BbWEXQ9qYlglMB1M6lb9-H9bntnfbW8QOF5Jp>`;
+                }
+            else{
+                <%var flag=0;%>
+            document.getElementById("x").innerHTML=`<%key='0';
+                while(key in a !=false){%> 
+                    
+                    
+                        
+                        <%for(var i=0;i<o.length;i++){
+                            if(a[key][0]==o[i].uname.location && o[i].status=="2"){%>
+                            <%flag++%>
+                            <li id=i>o_id:<%=o[i].o_id%>
+                            <p>start location:<%=key%></p>
+                            <p>Deliver to location:<%=a[key][0]%></p>
+                            <p>username:<%=o[i].uname.uname%></p>
+                            <p>Mobile No:<%=o[i].uname.mobno%></p>
+                            <p>cost:<%=o[i].tot_cost%></p>
+                            <form method="post" action="/delivery/delconfirm/<%=dname%>/<%=o[i].o_id%>">
+                            <button>Delivered</button></form></li>
+                    <%}
+                    
+                    }
+                      key=a[key][0]; 
+                    }%>`;
+                <%if(flag==0){%>
+                    document.getElementById("x").innerHTML=`<h3>No More orders to deliver</h3>
+                    <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyTYCiB7LcZprNB_T2FG_fcKEHRp_bckXBCWjv88vopIHG1KrE>`;
+                    
+                <%}%>
+            }
+        </script>
+        </ul>
+    </body>
+    
+</html>
