@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Food App</title>
+    <script>
+        console.log("<%=menur[0].item_id%>");
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+         html {
+            box-sizing: border-box;
+}
+   .img1{ 
+        position: absolute;
+        height: 400px;
+        width: 100%; 
+        margin-top: 0; padding-top: 0; 
+        background-size: cover;
+        background-color: white;
+        opacity: 0.5;
+        }
+        h1{
+           position: absolute;
+            top: 160px;
+            left: 400px;
+            font-size: 80px;
+            font-family:sans-serif cursive;
+            font-weight: 600;
+        }
+        h2{
+            position: absolute;
+            left: 700px;
+            top: 300px;
+            font-family: Brush Script MT, Brush Script Std, cursive;
+            font-size: 50px;
+        }
+        ul {
+            list-style-type:none;
+            margin: 0;
+            padding: 0;
+            display: block;
+            
+        }
+        .active {
+            background-color: red;
+            color: white;
+        }
+        .navbar{
+            background-color: #333;
+            overflow: hidden;
+            top: 400px;
+            width: 100%;
+        }
+        .navbar a{
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 30px;
+            text-decoration: none;
+            font-size: 17px;
+            float: right;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+}
+        .Hee{
+            font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+            font-weight: 900;
+            position: absolute;
+            top: 450px;
+            font-size: 50px;
+        }
+        .Hehe{
+            font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+            font-weight: 900;
+            position: absolute;
+            top: 520px;
+            font-size: 50px;
+        }
+        .not-before11{
+            font-size:40px;
+            position:absolute;
+            top:600px;
+            font-family:Avantgarde, TeX Gyre Adventor,sans-serif;
+        }
+        .Grid{
+            position:absolute;
+            top:600px;
+            font:italic small-caps bold 20px georgia;
+            padding:10px;
+            
+        }
+       
+
+
+        
+   @media screen and (max-width: 500px) {
+        .column {
+            width: 100%;
+  }
+}
+        .Grid{
+            display: grid;
+        }
+        .column{
+            border:3px solid black;
+            display:table;
+            float: left;
+            width: 32%;
+            padding: 5px;
+            border-radius:30px;
+            border-collapse: seperate;
+            margin:5px;
+        }
+        .Grid{
+            display: grid;
+            grid-template-columns: auto auto auto;
+            padding: 10px;
+}
+        
+        .column img{
+            height:300px;
+            width:400px;
+            border-radius:60px;
+        }
+        
+        .column button{
+            border-color: #2196F3;
+            color: black;
+             border: 2px solid;
+            border-radius: 5px;
+            background-color: white;
+            padding: 14px 28px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left:30%;
+            box-shadow: 0 3px #111;
+            
+        }
+        .column button:hover{
+            background: red;
+            color: white;
+           box-shadow: 0 1px #ec6068;
+        }
+       column .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+            }
+       .column  button:disabled,
+                button[disabled]{
+                border: 1px solid #999999;
+                background-color: #ff6961;
+                color: #666666;
+            }
+        .column input{
+            border-radius:6px;
+            padding:10px;
+        }
+       
+    </style>
+</head>
+<body>
+    <img class="img1" src="https://www.colourbox.com/preview/7313019-spanish-cuisine-assorted-tapas-on-ceramic-plates.jpg" alt="Delicious Food" >
+    <h1>The FoodHuB</h1>
+    <h2>Tickle your taste buds....!!</h2>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#" class="butt">Contact</a></li>
+            <li><a href="#" class="butt">Special Offer</a></li>
+            <li><a href="#" class="butt">Orders</a></li>
+            <li><a href="/customer/cart/<%=u%>">Cart</a></li>
+            <li><a class="active" href="#" class="butt">Home</a></li>
+        </ul>
+</nav>
+    <p class="Hee">
+    Choose your delicacies!!
+    </p>
+    <p class="Hehe">Hello <%=u%></p>
+    <main>
+    <%if(!before11){%>
+        <div class="not-before11">
+        <p>Sorry for the inconvenience but you cannot order now!!!</p>
+        </div>
+    <%}
+    else{%>
+        <div class="Grid">
+            <%for(var i=0;i<menur.length;i++){%>
+            <form method="post" action="/customer/cart/<%=u%>/<%=menur[i].item_id%>">
+            <div class="column">
+               
+         <img src="<%=menur[i].item_url%>">
+            <p>Item name:<%=menur[i].item_name%></p><hr>
+            <p>Item Description:<%=menur[i].item_desc%></p><hr>
+            <%var flag=0;
+            for(var j=0;j<cartr.length;j++){
+            if(cartr[j].item_id==menur[i].item_id && cartr[j].username==u)
+            {
+            flag=1;
+            console.log(menur[i].item_name);
+            break;}
+        }
+            if(flag==0){
+        %>
+        <label for="qty">Quantity &nbsp; &nbsp;</label>
+            <input name="qty" type="number" placeholder="0" min="1" max="10"><hr>
+            <button type="submit">Add to Cart</button>
+
+            <% }%>
+            <%if(flag==1){%>
+            <label for="qty">Quantity &nbsp; &nbsp;</label>
+            <input name="qty" type="number" placeholder="qty" min="1" max="10" disabled><hr>
+            <button type="button" disabled>Added to cart</button>
+            <%}%>
+            </div>
+            </form>
+            <%}%>
+        </div>
+    <%}%>
+        
+	       </main>
+</body>
+</html>
