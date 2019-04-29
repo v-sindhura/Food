@@ -1,0 +1,121 @@
+<!--//This page displays the orders that the delivery man has already delivered-->
+<!DOCTYPE html>
+<html>
+    <head>
+<style>
+             body{
+                 margin:0;
+            }
+            .nav {                
+                list-style-type:none;
+                margin:0;
+                padding:0;
+                width:15%;
+                height:100%;
+                position:fixed;
+                overflow: auto;
+            background-color: #1995ad;
+                
+            }
+            .nav li a{
+                display:block;
+                color:white;
+                text-decoration: none;
+                padding:8px 16px;
+            }
+            .nav li:last-child {
+                border-bottom: none;
+            }
+
+            .nav li a:hover:not(.active) {
+                background-color: #bcbabe;
+            }
+            .nav  a:hover,a:active{
+                background-color:#bcbabe;
+            }
+            .nav li a.active {
+                background-color: #bcbabe;
+            }
+            .og-grid {
+                padding-top:10%;
+                list-style: none;
+                padding: 20px 0;
+                margin: 0 auto;
+                width: 100%;
+                padding-left: 0%;
+    
+                }
+
+            .og-grid li {
+                display:block;
+                margin: 10px 5px 0 5px;
+                vertical-align: top;
+                width:75%;
+                height: 200px;
+                padding-left: 10px;
+                border: 1px solid #555;
+                background-color: white;
+                border-radius: 10px;
+                color:black;
+                    
+                }
+            .og-grid button{
+                position: absolute;
+                left:75%;
+                background-color: #1995ad;
+                border:none;
+                border-radius: 20px;
+                outline-color: white;
+                width:150px;
+                height:40px;
+                color:white;
+            }
+            .og-grid ul{
+                border:1px solid #555;
+                background-color: #f1f1f1;
+                list-style-type:none;
+    
+            }
+            
+        </style>
+    </head>
+    <body>
+        <ul class="nav">
+            <li><a href="/delivery/<%=dname%>">Orders to deliver</a></li>
+            <li><a class=active href="/delivery/deliveredorders/<%=dname%>">Delivered orders</a></li>
+            <li><a  href="/logout">Log Out</a></li>
+        </ul> 
+        <div style="margin-left:17%;padding:1px 16px;height:1000px;">
+            <h1 >Hi <%=dname%> !!</h1>
+            <ul id="og-grid" class="og-grid">
+            <main id="x">
+
+            </main>
+            </ul>
+            <script type="text/javascript"> 
+                <%var flag=0%>
+                if(<%=o.length%>==0){
+                    document.getElementById("x").innerHTML='<h3>You dont have any delivered orders</h3>';
+                }
+                else{
+                    document.getElementById("x").innerHTML=`<%for(var i=0;i<o.length;i++){
+                            if(o[i].d_uname==dname && o[i].status=="3"){%>
+                            <%flag++%>
+                            <li id=i>o_id:<%=o[i].o_id%>
+                            <p>username:<%=o[i].uname.uname%></p>
+                            <p>Mobile No:<%=o[i].uname.mobno%></p>
+                            <p>cost:<%=o[i].tot_cost%></p>
+                            </li>
+                    <%}
+                    
+                    }%>`
+                    <%if(flag==0){%>
+                    document.getElementById("x").innerHTML='<h3>You dont have any delivered orders</h3>';
+                <%}%>
+                        
+
+                }
+            </script>
+        </div>
+    </body>
+</html>
