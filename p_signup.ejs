@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign up-Food App</title>
+    <!--The following code is used to set style or give a better look to the application-->
+    <style>
+        html{
+            height: 100%;
+        }
+        body{
+            background: url(https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?cs=srgb&dl=burrito-chicken-close-up-461198.jpg&fm=jpg);
+            background-color: #cccccc;
+            height:100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .loginbox
+        {
+            width: 320px;
+            height: 650px;
+            background: #000;
+            color: #fff;
+            top: 20%;
+            left: 60%;
+            position: absolute;
+            transform: translate(-50% -50%);
+            box-sizing: border-box;
+            padding: 70px 30px;
+            border-radius: 50px;
+                
+        }
+        .avatar
+        {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            position: absolute;
+            top: -100px;
+            left:82px;
+        }
+        h1
+        {
+            margin: 0;
+            padding: 0 0 20px;
+            text-align: center;
+            font-size: 22px;
+            top: 50%;
+        }
+        .loginbox p
+        {
+            margin: 0;
+            padding: 0;
+            font-weight: bold;
+        }
+        .loginbox input
+        {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .loginbox input[type="text"], input[type="password"]
+        {
+            border: none;
+            border-bottom: 1px solid #fff;
+            background: transparent;
+            outline: none;
+            height: 40px;
+            color: #fff;
+            font-size: 16px;
+        }
+        .loginbox input[type="submit"]
+        {
+            border: none;
+            outline: none;
+            height: 40px;
+            background: #fb2525;
+            color: #fff;
+            font-size: 18px;
+            border-radius: 20px;
+        }
+        .loginbox input[type="submit"]:hover
+        {
+            cursor: grabbing;
+            background: #ffc107;
+            color: #000;
+        }
+        .loginbox a
+        {
+            text-decoration: none;
+            font-size: 12px;
+            line-height: 20px;
+            color: white;
+        }
+        .loginbox a:hover
+        {
+            color: #ffc107;
+        }
+    
+    </style>
+    
+    <!--This function validates the form once the submit button is clicked on, and it returns true if all conditions are valid-->
+    <script type="text/javascript">
+            function validateForm() {
+                //var db = firebase.firestore();
+                var username = document.getElementById("username1").value;               
+                var email = document.getElementById("email1").value;    
+                var mobno = document.getElementById("mobno1").value;  
+                var password_1 =  document.getElementById("pwd1").value;  
+                var password_2 = document.getElementById("pwd2").value;  
+                var temp = document.getElementById("location");
+                var location = temp.options[temp.selectedIndex].value;
+
+   
+                if (username.value == "")                                  
+                { 
+                    alert("Please enter your username."); 
+                    username.focus(); 
+                    return false; 
+                }    
+                      
+                if (email.value == "")                                   
+                { 
+                    alert("Please enter a valid e-mail address."); 
+                    email.focus(); 
+                    return false; 
+                } 
+   
+                if (email.value.indexOf("@", 0) < 0)                 
+                { 
+                    alert("Please enter a valid e-mail address."); 
+                    email.focus(); 
+                    return false; 
+                } 
+   
+                if (email.value.indexOf(".", 0) < 0)                 
+                { 
+                    alert("Please enter a valid e-mail address."); 
+                    email.focus(); 
+                    return false; 
+                } 
+   
+                if (mobno.value == "")                         
+                { 
+                    alert("Please enter your valid phone number."); 
+                    mobno.focus(); 
+                    return false; 
+                } 
+
+                if (mobno.value<0)
+                {
+                    alert("Please enter your valid phone number."); 
+                    mobno.focus(); 
+                    return false; 
+                }   
+
+                if (mobno.length() < 10)                     
+                { 
+                    alert("Please enter valid phone number."); 
+                    mobno.focus(); 
+                    return false; 
+                } 
+
+                if (mobno.length() > 10)
+                {
+                    alert("Please enter valid phone number."); 
+                    mobno.focus(); 
+                    return false; 
+                }
+   
+                if (password_1.value == "")                        
+                { 
+                    alert("Please enter your password"); 
+                    password_1.focus(); 
+                    return false; 
+                } 
+
+                if (password_1.length() <4)                        
+                { 
+                    alert("Password must be greater than 4 characters"); 
+                    password_1.focus(); 
+                    return false; 
+                } 
+
+                } 
+
+                if (password_2.value == "")                        
+                { 
+                    alert("Please enter confirmation password"); 
+                    password_2.focus(); 
+                    return false; 
+                } 
+
+                if (password_2.length() <4)                        
+                { 
+                    alert("Password must be greater than 4 characters"); 
+                    password_1.focus(); 
+                    return false; 
+
+   
+                if (password_1.value != password_2.value)                  
+                { 
+                    alert("Passwords are not matching!"); 
+                    password_2.focus();
+                    return false; 
+                } 
+   
+                return true; 
+
+            }
+        </script>
+    </head>
+
+    <!--The body / front end of the page-->
+    <body>
+    <div class="loginbox">
+        <img src="https://i.pinimg.com/originals/eb/80/87/eb80873b89dcc92228712b6257ac05d0.jpg" class="avatar">
+        <h1>Sign Up Here</h1>
+        <form action="/user/signupsubmit" name="form" method="post" onclick="return validateForm()" >
+            <p>Username</p>
+                <input type="text" name="username" id="username" placeholder="Enter Username" value=""  required>
+            <p>Email</p>
+                <input type="email" name="email" id="email1" placeholder="&#9993 Enter Email" value=""  title="Enter a valid email ID" required>
+            <p>Mobile Number</p>
+                <input  name="mobno" id="mobno1" placeholder="&#9742 Enter Mobile Number" pattern="[6|7|8|9][0-9]{9}" title="Enter 10 digits" maxlenght="10" minlength=10 value="" required>
+            <p>Password</p>
+                
+              <input type="password" name="password_1" id="pwd1" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" placeholder="&#128274 Enter Password"  title="Password must contain atleast 8 or more characters , atleast 1 number , 1 uppercase , and 1 lower case letter" required>
+            <p>Confirm Password</p>
+                <input type="password" name="password" id="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" placeholder="Confirm Password" required>
+            
+            <a href="/user/custlogin">Already a member?</a><br>
+
+            <p>Location</p>
+            <div class="Loc">
+            <select name="location" id="location" placeholder="Enter location" required>
+            
+            <option value="1">Accenture</option>
+            <option value="2">Wipro</option>
+            <option value="3">TCS</option>
+            <option value="4">IBM</option>
+            <option value="5">Cognizant</option>
+            <option value="6">Capgemini</option>
+            <option value="7">Oracle</option>
+            <option value="8">Cisco</option>
+            <option value="9">Mindtree</option>
+            <option value="10">HCL</option>
+            <option value="11">Mu Sigma</option>
+            <option value="12">Amazon</option>
+            <option value="13">Dell</option>
+            <option value="14">HP</option>
+            <option value="15">TechMahindra</option>
+            <option value="16">SAP</option>
+            <option value="17">Samsung</option>
+            <option value="18">HoneyWell</option>
+            <option value="19">Robert Bosch</option>
+            <option value="20">Thomson Reuters</option>
+            <option value="21">CGI</option>
+            <option value="22">Mphasis</option>
+            <option value="23">EY</option>
+            <option value="24">Deloitte</option>
+            <option value="25">Nokia</option>
+            <option value="26">Intel</option>
+            <option value="27">Huawei</option>
+            <option value="28">Goldman Sachs</option>
+            <option value="29">Flipkart</option>
+            <option value="30">Infosys</option>
+            </select>
+            <br><br>
+            </div>
+            <input type="submit" name="register" id="submit" value="Signup"><br>
+        </form>
+        
+    </div>
+    </body>
+</html>
