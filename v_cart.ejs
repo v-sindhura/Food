@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>User Cart</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            outline: 0;
+            box-sizing: border-box;
+        }
+        body {
+            -webkit-background-size:cover;
+            background-size:cover;
+            background-position: center center;
+            height: 100vh;
+        }
+        .menu-area li a {
+            text-decoration: none;
+        }
+
+        .menu-area li {
+            list-style-type: none;
+        }
+
+        .custom-padding{
+            padding-top: 25px;
+        }
+
+        nav {
+            position: relative;
+            width: calc(100% - 60px);
+            margin: 0 auto;
+            padding: 10px 0;
+            background: #333;
+            z-index: 1;
+            text-align: right;
+            padding-right: 2%;
+        }
+
+        .logo {
+            width: 15%;
+            float: left;
+            text-transform: uppercase;
+            color: #fff;
+            font-size: 25px;
+            text-align: left;
+            padding-left: 2%;
+        }
+
+        .menu-area li {
+            display: inline-block;
+        }
+
+        .menu-area a {
+            color: #fff;
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: block;
+            padding: 0 25px;
+            font-size: 14px;
+            line-height: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        .menu-area a:hover {
+            background: red;
+            color: #fff;
+        }
+
+        .menu-area a:hover:after {
+            transform: translateY(-50%) rotate(-35deg);
+        }
+
+        nav:before {
+            position: absolute;
+            content: '';
+            border-top: 10px solid #333;
+            border-right: 10px solid #333;
+            border-left: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            top: 100%;
+            left: 0;
+        }
+
+        nav:after {
+            position: absolute;
+            content: '';
+            border-top: 10px solid #333;
+            border-left: 10px solid #333;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            top: 100%;
+            right: 0;
+        }
+        .active {
+            background-color: red;
+            color: white;
+        }
+        .Grid{
+            position:absolute;
+            top:100px;
+        }
+        .column{
+            border:3px solid black;
+            display:table;
+            float: left;
+            width: 32%;
+            padding: 5px;
+            border-radius:30px;
+            border-collapse: seperate;
+            margin:5px;
+        }
+    
+    </style>
+    </head>
+    <body>
+    <div class="custom-padding">
+        <nav>
+        <div class="logo">FoodHub</div>
+            <ul class="menu-area">
+                <li><a href="#" class="butt">Contact</a></li>
+                <li><a href="#" class="butt">Special Offer</a></li>
+                <li><a href="#" class="butt">Orders</a></li>
+                <li><a class="active" href="#" >Cart</a></li>
+                <li><a  href="#" class="butt">Home</a></li>
+            </ul>
+        </nav>
+        </div>
+        
+        <div class="Grid">
+            <%for(var i=0;i<cartr.length;i++){%>
+            <div class="column">
+            <p>Item id:<%=cartr[i].item_id%></p>
+            <%var j=cartr[i].item_id;%>
+            <p>Item name:<%=menur[j].item_name%></p>
+                <p>Item name:<%=menur[j].item_name%></p>
+                <form method="post" action=/customer/cartqtyupdate/<%=u%>/<%=cartr[i].item_id%>>
+                <label for="qty">Quantity &nbsp; &nbsp;</label>
+            <input name="qty" type="number" value=<%=cartr[i].quantity%> min=1 max="10"><hr>
+                  <button type="submit">Update</button>  
+                </form>
+                <form method="post" action=/customer/cartremove/<%=u%>/<%=cartr[i].item_id%>>
+                <button type="submit">Remove from Cart</button>
+                </form>
+            </div>
+            <%}%>
+        </div>
+        
+        <div class="checkout">
+            <%var totcost=0;
+            for(var k=0;k<cartr.length;k++){
+                var m=cartr[k].item_id;
+                totcost=totcost+(menur[m].item_cost*cartr[k].quantity);
+            }%>
+            <%if(totcost>0){%>
+            <p>Total bill:<%=totcost%></p>
+            
+            <form method="post" action="/customer/cartcheckout/<%=u%>/<%=totcost%>">
+            <button style="padding:500px" type="submit">CheckOut</button>
+            </form>
+        <%}%>
+            <%if(totcost==0){%>
+            <p>No items in the cart!!!</p>
+            <%}%>
+            
+        </div>
+    </body>
+</html>
